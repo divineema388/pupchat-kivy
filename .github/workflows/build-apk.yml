@@ -29,16 +29,18 @@ jobs:
             git \
             openjdk-11-jdk \
             unzip \
-            python3-pip
+            python3-pip \
+            libncurses5
           pip3 install --upgrade cython==0.29.33
           pip3 install buildozer
 
       - name: Build APK
         run: |
+          buildozer init || true
           buildozer android debug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: pupchat-apk
-          path: bin/*.ap
+    - name: Upload APK
+  uses: actions/upload-artifact@v3.1.3
+  with:
+    name: pupchat-apk
+    path: bin/*.apk
